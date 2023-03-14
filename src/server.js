@@ -38,8 +38,8 @@ const playlists = require('./api/playlists');
 const PlaylistsService = require('./services/postgres/playlists/PlaylistsService');
 const PlaylistsValidator = require('./validator/playlist');
 
-// playlist_song
-const playlistsongs = require('./api/playlist_song');
+// playlistsongs
+const playlistsongs = require('./api/playlistsongs');
 const PlaylistSongsService = require('./services/postgres/playlist_song/PlaylistSongsService')
 const PlaylistSongsValidator = require('./validator/playlist_songs');
 
