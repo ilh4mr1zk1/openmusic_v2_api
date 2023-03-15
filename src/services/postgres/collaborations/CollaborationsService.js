@@ -133,21 +133,38 @@ class CollaborationsService {
 
   }
 
-  async getPlaylistsOwner(id) {
+  async verifyPlaylistUserId(userId) {
     const query = {
       text: `
-      SELECT * FROM playlists
-      LEFT JOIN users
-      ON playlists.owner = users.id
-      WHERE playlists.owner = $1`,
-      values:[id]
-    }
+      SELECT * FROM users 
+      WHERE id = $1`,
+      values: [userId],
+    };
 
     const result = await this._pool.query(query);
-    if (result.owner !== id) {
-      throw new AuthorizationError('Anda tidak berhak mengakses resource ini');
-    }
+
+    if ( !result.rows.length ) {
+      throw new NotFoundError("playlistId atau userId tidak ditemukan. Pastikan Id tersebut Valid")
+    }    
+
   }
+
+  async verifyUserIdAccess(user_id, owner) {
+    try {
+
+      await this.verifyPlaylistUserId(user_id, owner);
+      
+    } catch (error) {
+
+      if (error instanceof NotFoundError) {
+        throw error;
+      }
+
+    }
+
+  }
+
+  
 
 }
 

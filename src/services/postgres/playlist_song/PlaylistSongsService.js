@@ -106,6 +106,20 @@ class PlaylistSongsService {
     }
   }
 
+  async checkDataPlaylists(id) {
+   const query = {
+      text: "SELECT * FROM playlists WHERE id = $1",
+      values: [id],
+    };
+
+    const result = await this._pool.query(query);
+
+    if (!result.rows.length) {
+      throw new NotFoundError("Ga ada");
+    }
+     
+  }
+
   async verifyPlaylistOwner(id) {
 
     const query = {
